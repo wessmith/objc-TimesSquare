@@ -15,7 +15,39 @@
  */
 @interface TSQCalendarMonthHeaderCell : TSQCalendarCell
 
+/** @name Display Properties */
+
+/** The font.
+ 
+ This is used for all text the header cell draws.
+ */
+@property (nonatomic, strong) UIFont *font UI_APPEARANCE_SELECTOR;
+
+/** The text color.
+ 
+ This is used for all text the header cell draws.
+ */
+@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR;
+
+/** The text shadow offset.
+ 
+ This is as you would set on `UILabel`.
+ */
+@property (nonatomic) CGSize shadowOffset UI_APPEARANCE_SELECTOR;
+
+/** The month format string.
+ 
+ This is the month format template. The default value is `yyyyLLLL` ("June 2013").
+ */
+@property (nonatomic) NSString *monthTemplate;
+
 /** @name Day Labels */
+
+/** The weekday format string.
+ 
+ This is the weekday format template. The default value is `cccccc` ("Wed").
+ */
+@property (nonatomic) NSString *weekdayTemplate;
 
 /** The day header labels.
  

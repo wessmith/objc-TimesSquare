@@ -265,6 +265,7 @@
             cell = [[[self rowCellClass] alloc] initWithCalendar:self.calendar reuseIdentifier:identifier];
             cell.backgroundColor = self.backgroundColor;
             cell.calendarView = self;
+            cell.hideNotThisMonthDays = self.hideLeadingAndTrailingDays;
         }
         return cell;
     }

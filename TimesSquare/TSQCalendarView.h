@@ -71,6 +71,13 @@
  */
 @property (nonatomic) BOOL pagingEnabled;
 
+/** Whether or not the calendar shows leading and trailing days.
+
+ Setting this to `YES` will hide trailing days from the previous month and the leading days from the following month.
+ Default value is `NO`.
+ */
+@property (nonatomic) BOOL hideLeadingAndTrailingDays;
+
 /** The distance from the edges of the view to where the content begins.
  
  This property is equivalent to the one defined on `UIScrollView`.

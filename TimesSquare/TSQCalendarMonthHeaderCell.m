@@ -28,7 +28,9 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     if (!self) {
         return nil;
     }
-    
+
+    self.monthTemplate = @"yyyyLLLL";
+    self.weekdayTemplate = @"ccccc";
     [self createHeaderLabels];
     
     return self;
@@ -46,7 +48,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
         _monthDateFormatter = [NSDateFormatter new];
         _monthDateFormatter.calendar = self.calendar;
         
-        NSString *dateComponents = @"yyyyLLLL";
+        NSString *dateComponents = self.monthTemplate;
         _monthDateFormatter.dateFormat = [NSDateFormatter dateFormatFromTemplate:dateComponents options:0 locale:[NSLocale currentLocale]];
     }
     return _monthDateFormatter;
@@ -61,7 +63,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     
     NSDateFormatter *dayFormatter = [NSDateFormatter new];
     dayFormatter.calendar = self.calendar;
-    dayFormatter.dateFormat = @"cccccc";
+    dayFormatter.dateFormat = self.weekdayTemplate;
     
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
         [headerLabels addObject:@""];
@@ -72,7 +74,7 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
         UILabel *label = [[UILabel alloc] initWithFrame:self.frame];
         label.textAlignment = UITextAlignmentCenter;
         label.text = [dayFormatter stringFromDate:referenceDate];
-        label.font = [UIFont boldSystemFontOfSize:12.f];
+        label.font = (self.font) ?: [UIFont boldSystemFontOfSize:12];;
         label.backgroundColor = self.backgroundColor;
         label.textColor = self.textColor;
         label.shadowColor = [UIColor whiteColor];
@@ -121,6 +123,17 @@ static const CGFloat TSQCalendarMonthHeaderCellMonthsHeight = 20.f;
     [super setBackgroundColor:backgroundColor];
     for (UILabel *label in self.headerLabels) {
         label.backgroundColor = backgroundColor;
+    }
+}
+
+#pragma mark - Appearance Proxy Setters -
+
+- (void)setFont:(UIFont *)font
+{    
+    [super setFont:font];
+    
+    for (UILabel *label in self.headerLabels) {
+        label.font = font;
     }
 }
 

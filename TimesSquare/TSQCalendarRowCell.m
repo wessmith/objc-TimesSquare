@@ -44,7 +44,7 @@
 
 - (void)configureButton:(UIButton *)button;
 {
-    button.titleLabel.font = [UIFont boldSystemFontOfSize:19.f];
+    button.titleLabel.font = (self.font) ?: [UIFont boldSystemFontOfSize:19];
     button.titleLabel.shadowOffset = self.shadowOffset;
     button.adjustsImageWhenDisabled = NO;
     [button setTitleColor:self.textColor forState:UIControlStateNormal];
@@ -67,6 +67,8 @@
 
 - (void)createNotThisMonthButtons;
 {
+    if (self.hideNotThisMonthDays) return;
+    
     NSMutableArray *notThisMonthButtons = [NSMutableArray arrayWithCapacity:self.daysInWeek];
     for (NSUInteger index = 0; index < self.daysInWeek; index++) {
         UIButton *button = [[UIButton alloc] initWithFrame:self.contentView.bounds];
@@ -103,8 +105,7 @@
     [self configureButton:self.selectedButton];
     
     [self.selectedButton setAccessibilityTraits:UIAccessibilityTraitSelected|self.selectedButton.accessibilityTraits];
-    
-    self.selectedButton.enabled = NO;
+        self.selectedButton.enabled = NO;
     [self.selectedButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.selectedButton setBackgroundImage:[self selectedBackgroundImage] forState:UIControlStateNormal];
     [self.selectedButton setTitleShadowColor:[UIColor colorWithWhite:0.0f alpha:0.75f] forState:UIControlStateNormal];
@@ -293,6 +294,84 @@
         self.todayDateComponents = [self.calendar components:NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:[NSDate date]];
     }
     return _todayDateComponents;
+}
+
+#pragma mark - Appearance Proxy Setters -
+
+- (void)setFont:(UIFont *)font
+{   
+    [super setFont:font];
+    
+    self.todayButton.titleLabel.font = font;
+    
+    
+    for (UIButton *button in self.dayButtons) {
+        button.titleLabel.font = font;
+    }
+    
+    for (UIButton *button in self.notThisMonthButtons) {
+        button.titleLabel.font = font;
+    }
+}
+
+- (void)setSelectedFont:(UIFont *)selectedFont
+{
+    [super setSelectedFont:selectedFont];
+    
+    self.selectedButton.titleLabel.font = selectedFont;
+}
+
+- (void)setTodayFont:(UIFont *)todayFont
+{
+    [super setTodayFont:todayFont];
+    
+    self.todayButton.titleLabel.font = todayFont;
+}
+
+- (void)setTextColor:(UIColor *)textColor
+{
+    [super setTextColor:textColor];
+    
+    for (UIButton *button in self.dayButtons) {
+        [button setTitleColor:textColor forState:UIControlStateNormal];
+    }
+    
+    for (UIButton *button in self.notThisMonthButtons) {
+        [button setTitleColor:textColor forState:UIControlStateNormal];
+    }
+}
+
+- (void)setShadowOffset:(CGSize)shadowOffset
+{
+    [super setShadowOffset:shadowOffset];
+    
+    self.todayButton.titleLabel.shadowOffset = shadowOffset;
+    self.selectedButton.titleLabel.shadowOffset = shadowOffset;
+    
+    for (UIButton *button in self.dayButtons) {
+        button.titleLabel.shadowOffset = shadowOffset;
+    }
+    
+    for (UIButton *button in self.notThisMonthButtons) {
+        button.titleLabel.shadowOffset = shadowOffset;
+    }
+}
+
+- (void)setTodayBackgroundImage:(UIImage *)todayBackgroundImage
+{
+    [self.todayButton setBackgroundImage:todayBackgroundImage forState:UIControlStateNormal];
+}
+
+- (void)setSelectedBackgroundImage:(UIImage *)selectedBackgroundImage
+{
+    [self.selectedButton setBackgroundImage:selectedBackgroundImage forState:UIControlStateNormal];
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage
+{
+    for (UIButton *button in self.dayButtons) {
+        [button setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+    }
 }
 
 @end

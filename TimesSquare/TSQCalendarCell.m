@@ -39,9 +39,9 @@
     dispatch_once(&onceToken, ^{
         shadowOffset = CGSizeMake(0.0f, onePixel);
     });
-    self.shadowOffset = shadowOffset;
+    _shadowOffset = shadowOffset;
     self.columnSpacing = onePixel;
-    self.textColor = [UIColor colorWithRed:0.47f green:0.5f blue:0.53f alpha:1.0f];
+    _textColor = [UIColor colorWithRed:0.47f green:0.5f blue:0.53f alpha:1.0f];
 
     return self;
 }

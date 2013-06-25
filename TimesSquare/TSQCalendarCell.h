@@ -53,23 +53,39 @@
  */
 + (CGFloat) cellHeight;
 
+/** The font.
+ 
+ This is used for all text the cell draws.
+ */
+@property (nonatomic, strong) UIFont *font UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIFont *selectedFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) UIFont *todayFont UI_APPEARANCE_SELECTOR;
+
 /** The text color.
  
  This is used for all text the cell draws; if a date is disabled, then it will draw in this color, but at 50% opacity.
  */
-@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong) UIColor *textColor UI_APPEARANCE_SELECTOR;
 
 /** The text shadow offset.
  
  This is as you would set on `UILabel`.
  */
-@property (nonatomic) CGSize shadowOffset;
+@property (nonatomic) CGSize shadowOffset UI_APPEARANCE_SELECTOR;
 
 /** The spacing between columns.
  
  This defaults to one pixel or `1.0 / [UIScreen mainScreen].scale`.
  */
-@property (nonatomic) CGFloat columnSpacing;
+@property (nonatomic) CGFloat columnSpacing UI_APPEARANCE_SELECTOR;
+
+/** @name Configuration Properties */
+
+/** Whether or not to show dates not from this calendar month.
+ 
+ Set this property to `YES` to hide dates not from this month. Default value is `NO`.
+ */
+@property (nonatomic) BOOL hideNotThisMonthDays;
 
 /** @name Initialization */
 
