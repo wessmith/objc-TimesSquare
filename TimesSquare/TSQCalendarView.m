@@ -149,9 +149,13 @@
         }
     }
     
-    _selectedDate = startOfDay;
+    BOOL isInitialValue = NO;
+    if (_selectedDate == nil) {
+        isInitialValue = YES;
+        _selectedDate = startOfDay;
+    }
     
-    if ([self.delegate respondsToSelector:@selector(calendarView:didSelectDate:)]) {
+    if (!isInitialValue && [self.delegate respondsToSelector:@selector(calendarView:didSelectDate:)]) {
         [self.delegate calendarView:self didSelectDate:startOfDay];
     }
 }
